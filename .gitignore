@@ -1,0 +1,55 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Large media files
+*.clip
+*.psd
+*.aep
+
+# Virtual environment
+venv/
+.env/
+.venv/
+Pipfile.lock
+poetry.lock
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs and debugging
+logs/
+*.log
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Configurations and user-specific settings
+config.json
+
+# Compiled Python files
+*.pyo
+*.pyd
+*.pyc
+
+# Temporary files
+tmp/
+temp/
+*.bak
+*.tmp
+
+
+# Dependency caches
+pip-wheel-metadata/
+__pypackages__/
+
+# Agent SDK specific (if applicable)
+openai_agents_cache/
+
+node_modules/
+.next/

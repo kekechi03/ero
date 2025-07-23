@@ -6,6 +6,7 @@ import ProfileView from '../components/ProfileView';
 import AdminView from '../components/AdminView';
 import RankingView from '../components/RankingView';
 import UploadView from '../components/UploadView';
+import NavBar from '../components/NavBar';
 
 type ViewType = 'auth' | 'game' | 'profile' | 'ranking' | 'upload' | 'admin';
 
@@ -65,46 +66,12 @@ export default function Home() {
   return (
     <div className="container">
       {currentUser && (
-        <nav className="nav">
-          <div className="nav-brand">ERO - エンターテインメントレーティング機構</div>
-          <div className="nav-links">
-            <button
-              className={`nav-link ${currentView === 'game' ? 'active' : ''}`}
-              onClick={() => setCurrentView('game')}
-            >
-              🎮 ゲーム
-            </button>
-            <button
-              className={`nav-link ${currentView === 'ranking' ? 'active' : ''}`}
-              onClick={() => setCurrentView('ranking')}
-            >
-              🏆 ランキング
-            </button>
-            <button
-              className={`nav-link ${currentView === 'upload' ? 'active' : ''}`}
-              onClick={() => setCurrentView('upload')}
-            >
-              📤 アップロード
-            </button>
-            <button
-              className={`nav-link ${currentView === 'profile' ? 'active' : ''}`}
-              onClick={() => setCurrentView('profile')}
-            >
-              👤 プロフィール
-            </button>
-            {isAdmin && (
-              <button
-                className={`nav-link ${currentView === 'admin' ? 'active' : ''}`}
-                onClick={() => setCurrentView('admin')}
-              >
-                🔧 管理者
-              </button>
-            )}
-            <button className="nav-link" onClick={handleLogout}>
-              ログアウト
-            </button>
-          </div>
-        </nav>
+        <NavBar
+          currentView={currentView}
+          isAdmin={isAdmin}
+          onNavigate={setCurrentView}
+          onLogout={handleLogout}
+        />
       )}
 
       {currentView === 'auth' && (

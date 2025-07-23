@@ -44,11 +44,12 @@ export default function AdminView({ user }: AdminViewProps) {
         const noCount = img.get('noCount') || 0;
         const totalVotes = yesCount + noCount;
         const yesPercentage = totalVotes > 0 ? Math.round((yesCount / totalVotes) * 100) : 0;
-        
-        return Object.assign(img, {
-          totalVotes,
-          yesPercentage
-        });
+
+        // Parse.Object はプロパティ追加が制限されているため、
+        // プロトタイプチェーンを利用してラッパオブジェクトを作成する
+        const wrapped = Object.create(img) as ImageWithStats;
+        Object.assign(wrapped, { totalVotes, yesPercentage });
+        return wrapped;
       });
       
       setImages(imagesWithStats);

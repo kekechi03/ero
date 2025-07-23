@@ -20,9 +20,17 @@ export default function AdminView({ user }: AdminViewProps) {
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // 画像リストは「管理」タブが開かれたときのみ読み込む
   useEffect(() => {
-    loadImages();
-  }, []);
+    if (activeTab === 'manage') {
+      setLoading(true);
+      loadImages();
+    } else {
+      // アップロードタブではエラーメッセージをクリア
+      setError('');
+      setLoading(false);
+    }
+  }, [activeTab]);
 
   const loadImages = async () => {
     try {

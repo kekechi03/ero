@@ -5,6 +5,7 @@ import GameView from '../components/GameView';
 import ProfileView from '../components/ProfileView';
 import AdminView from '../components/AdminView';
 import RankingView from '../components/RankingView';
+import UploadView from '../components/UploadView';
 
 type ViewType = 'auth' | 'game' | 'profile' | 'ranking' | 'upload' | 'admin';
 
@@ -119,7 +120,7 @@ export default function Home() {
       )}
       
       {currentView === 'upload' && currentUser && (
-        <AdminView user={currentUser} />
+        <UploadView user={currentUser} />
       )}
       
       {currentView === 'profile' && currentUser && (

@@ -1,17 +1,28 @@
 import type { AppProps } from 'next/app';
-import Head from 'next/head';
+import { useEffect, useState } from 'react';
 import '../styles/globals.css';
+import { Parse } from '../lib/models';
 
 export default function App({ Component, pageProps }: AppProps) {
-  return (
-    <>
-      <Head>
-        <title>エンターテインメントレーティング機構ERO</title>
-        <meta name="description" content="2D画像評価ゲーム" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Component {...pageProps} />
-    </>
-  );
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Parse初期化の確認
+    if (Parse.applicationId) {
+      setIsLoading(false);
+    } else {
+      console.error('Parse not initialized');
+      setIsLoading(false);
+    }
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="loading">
+        <div className="spinner"></div>
+      </div>
+    );
+  }
+
+  return <Component {...pageProps} />;
 }

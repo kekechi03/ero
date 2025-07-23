@@ -1,48 +1,53 @@
 import { useState, useEffect } from 'react';
-import Parse from '../lib/parseClient';
+import { Parse } from '../lib/models';
 import AuthView from '../components/AuthView';
 import GameView from '../components/GameView';
 import ProfileView from '../components/ProfileView';
 import AdminView from '../components/AdminView';
+import RankingView from '../components/RankingView';
 
-type View = 'game' | 'profile' | 'admin';
+type ViewType = 'auth' | 'game' | 'profile' | 'ranking' | 'upload' | 'admin';
 
 export default function Home() {
+  const [currentView, setCurrentView] = useState<ViewType>('auth');
   const [currentUser, setCurrentUser] = useState<Parse.User | null>(null);
-  const [currentView, setCurrentView] = useState<View>('game');
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is already logged in
-    const checkCurrentUser = async () => {
-      try {
-        const user = Parse.User.current();
-        if (user) {
-          // Validate session
-          await user.fetch();
-          setCurrentUser(user);
-        }
-      } catch (error) {
-        // Session is invalid, logout
-        await Parse.User.logOut();
-        setCurrentUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkCurrentUser();
+    checkAuth();
   }, []);
+
+  const checkAuth = async () => {
+    try {
+      const user = Parse.User.current();
+      if (user) {
+        setCurrentUser(user);
+        // 管理者チェック
+        const isAdminUser = user.get('isAdmin') === true || user.get('username') === 'admin';
+        setIsAdmin(isAdminUser);
+        setCurrentView('game');
+      }
+    } catch (error) {
+      console.error('Auth check error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleLogin = (user: Parse.User) => {
     setCurrentUser(user);
+    const isAdminUser = user.get('isAdmin') === true || user.get('username') === 'admin';
+    setIsAdmin(isAdminUser);
+    setCurrentView('game');
   };
 
   const handleLogout = async () => {
     try {
       await Parse.User.logOut();
       setCurrentUser(null);
-      setCurrentView('game');
+      setIsAdmin(false);
+      setCurrentView('auth');
     } catch (error) {
       console.error('Logout error:', error);
     }
@@ -50,64 +55,80 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="loading-screen">
-        <div className="loading-spinner"></div>
-        <p>読み込み中...</p>
+      <div className="loading">
+        <div className="spinner"></div>
       </div>
     );
   }
 
-  if (!currentUser) {
-    return <AuthView onLogin={handleLogin} />;
-  }
-
-  const isAdmin = currentUser?.get('username') === 'admin' || currentUser?.get('isAdmin');
-
   return (
-    <div className="app">
-      <nav className="navbar">
-        <div className="nav-brand">
-          <h1>ERO Game</h1>
-        </div>
-        
-        <div className="nav-menu">
-          <button 
-            className={currentView === 'game' ? 'nav-btn active' : 'nav-btn'}
-            onClick={() => setCurrentView('game')}
-          >
-            ゲーム
-          </button>
-          
-          <button 
-            className={currentView === 'profile' ? 'nav-btn active' : 'nav-btn'}
-            onClick={() => setCurrentView('profile')}
-          >
-            プロフィール
-          </button>
-          
-          {isAdmin && (
-            <button 
-              className={currentView === 'admin' ? 'nav-btn active' : 'nav-btn'}
-              onClick={() => setCurrentView('admin')}
+    <div className="container">
+      {currentUser && (
+        <nav className="nav">
+          <div className="nav-brand">ERO - エンターテインメントレーティング機構</div>
+          <div className="nav-links">
+            <button
+              className={`nav-link ${currentView === 'game' ? 'active' : ''}`}
+              onClick={() => setCurrentView('game')}
             >
-              管理者
+              🎮 ゲーム
             </button>
-          )}
-        </div>
+            <button
+              className={`nav-link ${currentView === 'ranking' ? 'active' : ''}`}
+              onClick={() => setCurrentView('ranking')}
+            >
+              🏆 ランキング
+            </button>
+            <button
+              className={`nav-link ${currentView === 'upload' ? 'active' : ''}`}
+              onClick={() => setCurrentView('upload')}
+            >
+              📤 アップロード
+            </button>
+            <button
+              className={`nav-link ${currentView === 'profile' ? 'active' : ''}`}
+              onClick={() => setCurrentView('profile')}
+            >
+              👤 プロフィール
+            </button>
+            {isAdmin && (
+              <button
+                className={`nav-link ${currentView === 'admin' ? 'active' : ''}`}
+                onClick={() => setCurrentView('admin')}
+              >
+                🔧 管理者
+              </button>
+            )}
+            <button className="nav-link" onClick={handleLogout}>
+              ログアウト
+            </button>
+          </div>
+        </nav>
+      )}
 
-        <div className="nav-user">
-          <span className="username">{currentUser.get('username')}</span>
-          <button onClick={handleLogout} className="logout-btn">
-            ログアウト
-          </button>
-        </div>
-      </nav>
-
-      <main className="main-content">
-        {currentView === 'game' && <GameView currentUser={currentUser} />}
-        {currentView === 'profile' && <ProfileView currentUser={currentUser} />}
-        {currentView === 'admin' && <AdminView currentUser={currentUser} />}
-      </main>
+      {currentView === 'auth' && (
+        <AuthView onLogin={handleLogin} />
+      )}
+      
+      {currentView === 'game' && currentUser && (
+        <GameView user={currentUser} />
+      )}
+      
+      {currentView === 'ranking' && currentUser && (
+        <RankingView user={currentUser} />
+      )}
+      
+      {currentView === 'upload' && currentUser && (
+        <AdminView user={currentUser} />
+      )}
+      
+      {currentView === 'profile' && currentUser && (
+        <ProfileView user={currentUser} />
+      )}
+      
+      {currentView === 'admin' && currentUser && isAdmin && (
+        <AdminView user={currentUser} />
+      )}
     </div>
   );
 }

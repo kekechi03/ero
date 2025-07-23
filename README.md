@@ -95,12 +95,11 @@ vercel env add NEXT_PUBLIC_PARSE_LIVEQUERY_URL
 2. ゲーム画面でランダム画像にYes/No投票
 3. 投票後、全体の結果を確認
 4. プロフィール画面で自分の傾向を分析
+5. アップロード画面で画像をアップロード
 
 ### 管理者
 1. 管理者権限でログイン
-2. 管理者タブから画像アップロード
-3. 各画像の投票統計を確認
-4. 不要な画像を削除
+2. 不要な画像を削除
 
 ## 技術スタック
 
@@ -119,6 +118,7 @@ ero/
 │   ├── AuthView.tsx    # 認証画面
 │   ├── GameView.tsx    # ゲーム画面
 │   ├── ProfileView.tsx # プロフィール画面
+│   ├── UploadView.tsx # アップロード画面
 │   └── AdminView.tsx   # 管理者画面
 ├── lib/
 │   ├── parseClient.ts  # Parse SDK初期化

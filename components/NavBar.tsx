@@ -13,29 +13,32 @@ interface NavBarProps {
 const NavBar: React.FC<NavBarProps> = ({ currentView, isAdmin, onNavigate, onLogout }) => {
   return (
     <nav className="nav">
-      <div className="nav-brand">ERO - エンターテインメントレーティング機構</div>
       <div className="nav-links">
         <button
           className={`nav-link ${currentView === 'game' ? 'active' : ''}`}
           onClick={() => onNavigate('game')}
+          style={{ whiteSpace: 'nowrap', minWidth: 'fit-content' }}
         >
           🎮 ゲーム
         </button>
         <button
           className={`nav-link ${currentView === 'ranking' ? 'active' : ''}`}
           onClick={() => onNavigate('ranking')}
+          style={{ whiteSpace: 'nowrap', minWidth: 'fit-content' }}
         >
           🏆 ランキング
         </button>
         <button
           className={`nav-link ${currentView === 'upload' ? 'active' : ''}`}
           onClick={() => onNavigate('upload')}
+          style={{ whiteSpace: 'nowrap', minWidth: 'fit-content' }}
         >
           📤 アップロード
         </button>
         <button
           className={`nav-link ${currentView === 'profile' ? 'active' : ''}`}
           onClick={() => onNavigate('profile')}
+          style={{ whiteSpace: 'nowrap', minWidth: 'fit-content' }}
         >
           👤 プロフィール
         </button>
@@ -43,11 +46,16 @@ const NavBar: React.FC<NavBarProps> = ({ currentView, isAdmin, onNavigate, onLog
           <button
             className={`nav-link ${currentView === 'admin' ? 'active' : ''}`}
             onClick={() => onNavigate('admin')}
+            style={{ whiteSpace: 'nowrap', minWidth: 'fit-content' }}
           >
             🔧 管理者
           </button>
         )}
-        <button className="nav-link" onClick={onLogout}>
+        <button 
+          className="nav-link" 
+          onClick={onLogout}
+          style={{ whiteSpace: 'nowrap', minWidth: 'fit-content' }}
+        >
           ログアウト
         </button>
       </div>

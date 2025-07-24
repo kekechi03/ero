@@ -6,9 +6,10 @@ import ProfileView from '../components/ProfileView';
 import AdminView from '../components/AdminView';
 import RankingView from '../components/RankingView';
 import UploadView from '../components/UploadView';
+import TermsView from '../components/TermsView';
 import NavBar from '../components/NavBar';
 
-type ViewType = 'auth' | 'game' | 'profile' | 'ranking' | 'upload' | 'admin';
+type ViewType = 'auth' | 'game' | 'profile' | 'ranking' | 'upload' | 'admin' | 'terms';
 
 export default function Home() {
   const [currentView, setCurrentView] = useState<ViewType>('auth');
@@ -97,6 +98,35 @@ export default function Home() {
       {currentView === 'admin' && currentUser && isAdmin && (
         <AdminView user={currentUser} />
       )}
+      
+      {currentView === 'terms' && (
+        <TermsView />
+      )}
+      
+      <footer style={{
+        textAlign: 'center',
+        padding: '20px 0',
+        marginTop: 'auto',
+        opacity: 0.6
+      }}>
+        <button 
+          onClick={() => setCurrentView('terms')}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: '#999',
+            fontSize: '11px',
+            cursor: 'pointer',
+            textDecoration: 'none',
+            padding: '0',
+            margin: '0'
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
+          onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
+        >
+          利用規約
+        </button>
+      </footer>
     </div>
   );
 }

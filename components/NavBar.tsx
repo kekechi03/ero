@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dispatch, SetStateAction } from 'react';
 
-type ViewType = 'auth' | 'game' | 'profile' | 'ranking' | 'upload' | 'admin';
+type ViewType = 'auth' | 'game' | 'profile' | 'ranking' | 'upload' | 'admin' | 'terms';
 
 interface NavBarProps {
   currentView: ViewType;

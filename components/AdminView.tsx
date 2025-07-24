@@ -12,6 +12,8 @@ interface ImageWithStats {
   get: (key: string) => any;
   totalVotes: number;
   yesPercentage: number;
+  yesCount: number;
+  noCount: number;
 }
 
 export default function AdminView({ user }: AdminViewProps) {
@@ -33,8 +35,8 @@ export default function AdminView({ user }: AdminViewProps) {
       const results = await query.find();
 
       const imagesWithStats = results.map((img: EroImage) => {
-        const yesCount = img.get('yesCount') || 0;
-        const noCount = img.get('noCount') || 0;
+        const yesCount = img.yesCount || 0;
+        const noCount = img.noCount || 0;
         const totalVotes = yesCount + noCount;
         const yesPercentage = totalVotes > 0 ? Math.round((yesCount / totalVotes) * 100) : 0;
         return {

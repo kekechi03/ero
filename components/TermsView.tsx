@@ -82,16 +82,28 @@ const TermsView: React.FC = () => {
           </ol>
         </div>
       </div>
-      <div style={{ textAlign: 'center', marginTop: '20px' }}>
-        <button 
-          onClick={() => window.history.back()} 
+      
+      <div style={{ textAlign: 'center', marginTop: '40px' }}>
+        <button
+          onClick={() => window.history.back()}
           style={{
-            background: '#f3f4f6',
-            border: '1px solid #d1d5db',
-            padding: '8px 16px',
-            borderRadius: '4px',
+            background: 'linear-gradient(135deg, #8d6e63 0%, #6d4c41 100%)',
+            color: '#faf8f3',
+            border: 'none',
+            padding: '12px 30px',
+            borderRadius: '8px',
+            fontSize: '1rem',
             cursor: 'pointer',
-            fontSize: '14px'
+            transition: 'all 0.3s ease',
+            fontFamily: 'Georgia, serif'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = 'none';
           }}
         >
           戻る

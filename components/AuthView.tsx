@@ -29,6 +29,21 @@ export default function AuthView({ onLogin }: AuthViewProps) {
     localStorage.setItem('hasSeenIntro', 'true');
   };
 
+  const handleDemoLogin = async () => {
+    setLoading(true);
+    setError('');
+    
+    try {
+      const user = await Parse.User.logIn('demo', 'demo123');
+      onLogin(user);
+    } catch (error: any) {
+      console.error('Demo login error:', error);
+      setError(error.message || 'デモログインに失敗しました');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!username || !password) {
@@ -63,7 +78,7 @@ export default function AuthView({ onLogin }: AuthViewProps) {
   };
 
   return (
-    <div>
+    <div style={{ position: 'relative' }}>
       {showDescription && isReady && (
         <SiteDescription onClose={handleCloseDescription} />
       )}
@@ -73,9 +88,6 @@ export default function AuthView({ onLogin }: AuthViewProps) {
           <div className="card-header">
             <h1 className="card-title">ERO</h1>
             <h2 className="card-subtitle">エンターテインメントレーティング機構</h2>
-            <p style={{ color: '#666', fontSize: '1rem', marginBottom: '20px' }}>
-            エンターテインメントレーティング機構(ERO) - エッチ/ノーエッチで鑑定してください
-            </p>
           </div>
 
           {error && <div className="error">{error}</div>}
@@ -134,6 +146,34 @@ export default function AuthView({ onLogin }: AuthViewProps) {
                 disabled={loading}
               >
                 {isLogin ? 'アカウントを作成' : 'ログインに戻る'}
+              </button>
+            </div>
+
+            <div style={{ position: 'absolute', bottom: '10px', right: '10px' }}>
+              <button
+                type="button"
+                onClick={handleDemoLogin}
+                disabled={loading}
+                style={{
+                  background: 'transparent',
+                  color: '#8d6e63',
+                  border: 'none',
+                  padding: '4px 8px',
+                  fontSize: '0.7rem',
+                  cursor: 'pointer',
+                  opacity: 0.6,
+                  transition: 'opacity 0.2s ease',
+                  fontFamily: 'Georgia, serif',
+                  textDecoration: 'underline'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.opacity = '1';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.opacity = '0.6';
+                }}
+              >
+                デモログイン
               </button>
             </div>
           </form>

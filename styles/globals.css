@@ -350,16 +350,31 @@ a {
     padding: 15px 30px;
     font-size: 1.1rem;
   }
-  
-  .nav {
-    flex-direction: column;
-    gap: 15px;
+}
+
+/* Animations for SiteDescription */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { 
+    opacity: 0;
+    transform: translateY(-20px);
   }
-  
-  .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
+  to { 
+    opacity: 1;
+    transform: translateY(0);
   }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+.slide-in {
+  animation: slideIn 0.5s ease-out;
 }
 
 /* Animations */

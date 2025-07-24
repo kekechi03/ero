@@ -48,14 +48,14 @@ export default function GameView({ user }: GameViewProps) {
     setError('');
 
     try {
-      // 投票済みの画像IDを取得
+      // 鑑定済みの画像IDを取得
       const votedQuery = new Parse.Query(Vote);
       votedQuery.equalTo('user', user);
       votedQuery.select('image');
       const votes = await votedQuery.find();
       const votedImageIds = votes.map(vote => vote.get('image').id);
 
-      // 未投票の画像を検索
+      // 未鑑定の画像を検索
       const imageQuery = new Parse.Query(EroImage);
       if (votedImageIds.length > 0) {
         imageQuery.notContainedIn('objectId', votedImageIds);
@@ -64,7 +64,7 @@ export default function GameView({ user }: GameViewProps) {
       const images = await imageQuery.find();
       
       if (images.length === 0) {
-        setError('すべての画像に投票済みです！新しい画像がアップロードされるまでお待ちください。');
+        setError('すべての画像に鑑定済みです！新しい画像がアップロードされるまでお待ちください。');
         setCurrentImage(null);
         return;
       }
@@ -114,14 +114,14 @@ export default function GameView({ user }: GameViewProps) {
     setError('');
 
     try {
-      // 投票を保存
+      // 鑑定を保存
       const vote = new Vote();
       vote.set('image', currentImage);
       vote.set('user', user);
       vote.set('answer', answer);
       await vote.save();
 
-      // 画像の投票数を更新
+      // 画像の鑑定数を更新
       if (answer) {
         currentImage.set('yesCount', (currentImage.get('yesCount') || 0) + 1);
       } else {
@@ -147,7 +147,7 @@ export default function GameView({ user }: GameViewProps) {
       setUserVoteCount(prev => prev + 1);
     } catch (error: any) {
       console.error('Error voting:', error);
-      setError('投票に失敗しました');
+      setError('鑑定に失敗しました');
     } finally {
       setVoting(false);
     }
@@ -174,7 +174,7 @@ export default function GameView({ user }: GameViewProps) {
       <div className="stats">
         <div className="stat-item">
           <span className="stat-value">{userVoteCount}</span>
-          <span className="stat-label">投票数</span>
+          <span className="stat-label">鑑定数</span>
         </div>
         <div className="stat-item">
           <span className="stat-value">{totalImages}</span>
@@ -188,8 +188,8 @@ export default function GameView({ user }: GameViewProps) {
 
       <div className="card">
         <div className="card-header">
-          <h2 className="card-title">🎮 画像評価ゲーム</h2>
-          <p className="card-subtitle">この画像はどうですか？</p>
+          <h2 className="card-title"></h2>
+          <p className="card-subtitle">鑑定をお願いします</p>
         </div>
 
         {error && <div className="error">{error}</div>}
@@ -215,34 +215,34 @@ export default function GameView({ user }: GameViewProps) {
                   onClick={() => handleVote(true)}
                   disabled={voting}
                 >
-                  {voting ? '投票中...' : '👍 YES'}
+                  {voting ? '鑑定中...' : 'エッチ'}
                 </button>
                 <button
                   className="vote-btn vote-btn-no"
                   onClick={() => handleVote(false)}
                   disabled={voting}
                 >
-                  {voting ? '投票中...' : '👎 NO'}
+                  {voting ? '鑑定中...' : 'ノーエッチ'}
                 </button>
               </div>
             ) : (
               <div style={{ textAlign: 'center' }}>
                 <div className="success">
-                  あなたの投票: {voteResult.userAnswer ? '👍 YES' : '👎 NO'}
+                  あなたの鑑定: {voteResult.userAnswer ? 'エッチ' : 'ノーエッチ'}
                 </div>
                 
                 <div className="stats" style={{ margin: '20px 0' }}>
                   <div className="stat-item">
                     <span className="stat-value" style={{ color: '#48bb78' }}>{voteResult.yesCount}</span>
-                    <span className="stat-label">👍 YES票</span>
+                    <span className="stat-label">エッチ回</span>
                   </div>
                   <div className="stat-item">
                     <span className="stat-value" style={{ color: '#f56565' }}>{voteResult.noCount}</span>
-                    <span className="stat-label">👎 NO票</span>
+                    <span className="stat-label">ノーエッチ回</span>
                   </div>
                   <div className="stat-item">
                     <span className="stat-value">{voteResult.yesPercentage}%</span>
-                    <span className="stat-label">YES率</span>
+                    <span className="stat-label">エッチ率</span>
                   </div>
                 </div>
 
@@ -264,7 +264,7 @@ export default function GameView({ user }: GameViewProps) {
                     ></div>
                   </div>
                   <p style={{ textAlign: 'center', marginTop: '10px', fontSize: '0.9rem', color: '#666' }}>
-                    総投票数: {voteResult.totalVotes}票
+                    総鑑定数: {voteResult.totalVotes}回
                   </p>
                 </div>
 
@@ -284,10 +284,10 @@ export default function GameView({ user }: GameViewProps) {
           <div style={{ textAlign: 'center', padding: '40px' }}>
             <h3 style={{ color: '#667eea', marginBottom: '20px' }}>🎉 お疲れ様でした！</h3>
             <p style={{ fontSize: '1.1rem', color: '#666', marginBottom: '20px' }}>
-              すべての画像への投票が完了しました
+              すべての画像への鑑定が完了しました
             </p>
             <p style={{ color: '#888' }}>
-              新しい画像がアップロードされたら、また投票をお楽しみください
+              新しい画像がアップロードされたら、また鑑定をお楽しみください
             </p>
           </div>
         )}

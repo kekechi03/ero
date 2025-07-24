@@ -31,14 +31,14 @@ export default function RankingView({ user }: RankingViewProps) {
       // 最もYesが多い画像を取得
       const topYesQuery = new Parse.Query(EroImage);
       topYesQuery.descending('yesCount');
-      topYesQuery.greaterThan('yesCount', 0); // 投票がある画像のみ
+      topYesQuery.greaterThan('yesCount', 0); // 鑑定がある画像のみ
       topYesQuery.limit(10);
       const topYesResults = await topYesQuery.find();
 
       // 最もNoが多い画像を取得
       const topNoQuery = new Parse.Query(EroImage);
       topNoQuery.descending('noCount');
-      topNoQuery.greaterThan('noCount', 0); // 投票がある画像のみ
+      topNoQuery.greaterThan('noCount', 0); // 鑑定がある画像のみ
       topNoQuery.limit(10);
       const topNoResults = await topNoQuery.find();
 
@@ -98,9 +98,9 @@ export default function RankingView({ user }: RankingViewProps) {
     if (images.length === 0) {
       return (
         <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
-          <h3>📷 まだ投票された画像がありません</h3>
+          <h3>📷 まだ鑑定された画像がありません</h3>
           <p style={{ marginTop: '10px' }}>
-            画像に投票してランキングを作りましょう！
+            画像に鑑定してランキングを作りましょう！
           </p>
         </div>
       );
@@ -160,22 +160,23 @@ export default function RankingView({ user }: RankingViewProps) {
             <div style={{ flex: 1 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
                 <div style={{ 
-                  fontSize: '1.5rem', 
-                  fontWeight: 'bold', 
-                  color: type === 'yes' ? '#48bb78' : '#f56565'
+                  fontSize: '1.2rem', 
+                  fontWeight: 'bold',
+                  color: type === 'yes' ? '#10b981' : '#ef4444',
+                  marginBottom: '5px'
                 }}>
-                  {type === 'yes' ? '👍' : '👎'} {type === 'yes' ? item.yesCount : item.noCount} 票
+                  {type === 'yes' ? 'エッチ' : 'ノーエッチ'} {type === 'yes' ? item.yesCount : item.noCount} 回
                 </div>
                 <div style={{ fontSize: '0.9rem', color: '#666' }}>
-                  総投票数: {item.totalVotes}票
+                  総鑑定数: {item.totalVotes}回
                 </div>
               </div>
 
-              {/* 投票バー */}
+              {/* 鑑定バー */}
               <div style={{ marginBottom: '10px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: '#666', marginBottom: '5px' }}>
-                  <span>👍 YES: {item.yesCount}</span>
-                  <span>👎 NO: {item.noCount}</span>
+                  <span>エッチ: {item.yesCount}</span>
+                  <span>ノーエッチ: {item.noCount}</span>
                 </div>
                 <div style={{ 
                   display: 'flex', 
@@ -200,7 +201,7 @@ export default function RankingView({ user }: RankingViewProps) {
                   ></div>
                 </div>
                 <div style={{ textAlign: 'center', marginTop: '5px', fontSize: '0.9rem', color: '#666' }}>
-                  YES率: {item.yesPercentage}%
+                  エッチ率: {item.yesPercentage}%
                 </div>
               </div>
 
@@ -221,25 +222,25 @@ export default function RankingView({ user }: RankingViewProps) {
       <div className="card">
         <div className="card-header">
           <h2 className="card-title">🏆 ランキング</h2>
-          <p className="card-subtitle">人気画像・不人気画像のランキング</p>
+          <p className="card-subtitle">上位画像のランキング</p>
         </div>
 
         {/* 統計サマリー */}
         <div className="stats">
           <div className="stat-item">
             <span className="stat-value" style={{ color: '#48bb78' }}>{topYesImages.length}</span>
-            <span className="stat-label">YES画像数</span>
+            <span className="stat-label">エッチ画像数</span>
           </div>
           <div className="stat-item">
             <span className="stat-value" style={{ color: '#f56565' }}>{topNoImages.length}</span>
-            <span className="stat-label">NO画像数</span>
+            <span className="stat-label">ノーエッチ画像数</span>
           </div>
           <div className="stat-item">
             <span className="stat-value">
               {topYesImages.reduce((sum, img) => sum + img.totalVotes, 0) + 
                topNoImages.reduce((sum, img) => sum + img.totalVotes, 0)}
             </span>
-            <span className="stat-label">総投票数</span>
+            <span className="stat-label">総鑑定数</span>
           </div>
         </div>
 
@@ -254,7 +255,7 @@ export default function RankingView({ user }: RankingViewProps) {
               color: activeTab === 'yes' ? '#48bb78' : '#4a5568'
             }}
           >
-            🏆 TOP YES (人気画像)
+            トップエッチ画像
           </button>
           <button
             className={`nav-link ${activeTab === 'no' ? 'active' : ''}`}
@@ -265,7 +266,7 @@ export default function RankingView({ user }: RankingViewProps) {
               color: activeTab === 'no' ? '#f56565' : '#4a5568'
             }}
           >
-            💔 TOP NO (不人気画像)
+            トップノーエッチ画像
           </button>
         </div>
 
@@ -274,7 +275,7 @@ export default function RankingView({ user }: RankingViewProps) {
           {activeTab === 'yes' && (
             <div>
               <h3 style={{ color: '#48bb78', marginBottom: '20px', textAlign: 'center' }}>
-                🏆 最も人気の画像 (YES票数順)
+                最もエッチの画像
               </h3>
               {renderRankingList(topYesImages, 'yes')}
             </div>
@@ -283,7 +284,7 @@ export default function RankingView({ user }: RankingViewProps) {
           {activeTab === 'no' && (
             <div>
               <h3 style={{ color: '#f56565', marginBottom: '20px', textAlign: 'center' }}>
-                💔 最も不人気の画像 (NO票数順)
+                最もノーエッチの画像
               </h3>
               {renderRankingList(topNoImages, 'no')}
             </div>

@@ -19,7 +19,7 @@ const NavBar: React.FC<NavBarProps> = ({ currentView, isAdmin, onNavigate, onLog
           onClick={() => onNavigate('game')}
           style={{ whiteSpace: 'nowrap', minWidth: 'fit-content' }}
         >
-          🎮 ゲーム
+          🎮 評価
         </button>
         <button
           className={`nav-link ${currentView === 'ranking' ? 'active' : ''}`}

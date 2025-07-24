@@ -27,7 +27,7 @@ export default function ProfileView({ user }: ProfileViewProps) {
 
   const loadUserStats = async () => {
     try {
-      // ユーザーの投票履歴を取得
+      // ユーザーの鑑定履歴を取得
       const voteQuery = new Parse.Query(Vote);
       voteQuery.equalTo('user', user);
       voteQuery.include('image');
@@ -108,7 +108,7 @@ export default function ProfileView({ user }: ProfileViewProps) {
       <div className="card">
         <div className="card-header">
           <h2 className="card-title">👤 プロフィール</h2>
-          <p className="card-subtitle">@{user.get('username')} の投票傾向分析</p>
+          <p className="card-subtitle">@{user.get('username')} の鑑定傾向分析</p>
         </div>
 
         {/* タブ */}
@@ -135,30 +135,30 @@ export default function ProfileView({ user }: ProfileViewProps) {
             <div className="stats">
               <div className="stat-item">
                 <span className="stat-value">{userStats.totalVotes}</span>
-                <span className="stat-label">総投票数</span>
+                <span className="stat-label">総鑑定数</span>
               </div>
               <div className="stat-item">
                 <span className="stat-value" style={{ color: '#48bb78' }}>{userStats.yesVotes}</span>
-                <span className="stat-label">👍 YES投票</span>
+                <span className="stat-label">エッチ鑑定</span>
               </div>
               <div className="stat-item">
                 <span className="stat-value" style={{ color: '#f56565' }}>{userStats.noVotes}</span>
-                <span className="stat-label">👎 NO投票</span>
+                <span className="stat-label">ノーエッチ鑑定</span>
               </div>
               <div className="stat-item">
                 <span className="stat-value">{userStats.yesPercentage}%</span>
-                <span className="stat-label">YES率</span>
+                <span className="stat-label">エッチ率</span>
               </div>
             </div>
 
-            {/* 投票傾向分析 */}
+            {/* 鑑定傾向分析 */}
             <div style={{ background: '#f8f9fa', padding: '20px', borderRadius: '15px', margin: '20px 0' }}>
-              <h3 style={{ color: '#667eea', marginBottom: '15px', textAlign: 'center' }}>📈 投票傾向分析</h3>
+              <h3 style={{ color: '#667eea', marginBottom: '15px', textAlign: 'center' }}>📈 鑑定傾向分析</h3>
               
               <div style={{ marginBottom: '20px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-                  <span style={{ color: '#48bb78', fontWeight: 'bold' }}>👍 YES</span>
-                  <span style={{ color: '#f56565', fontWeight: 'bold' }}>👎 NO</span>
+                  <span style={{ color: '#48bb78', fontWeight: 'bold' }}>エッチ</span>
+                  <span style={{ color: '#f56565', fontWeight: 'bold' }}>ノーエッチ</span>
                 </div>
                 <div style={{ display: 'flex', height: '30px', borderRadius: '15px', overflow: 'hidden', background: '#e2e8f0' }}>
                   <div 
@@ -180,13 +180,13 @@ export default function ProfileView({ user }: ProfileViewProps) {
 
               <div style={{ textAlign: 'center' }}>
                 <p style={{ color: '#666', fontSize: '1.1rem', marginBottom: '10px' }}>
-                  {userStats.yesPercentage > 70 ? '🌟 ポジティブタイプ！多くの画像を好んでいます' :
-                   userStats.yesPercentage > 50 ? '⚖️ バランスタイプ！適度に選別しています' :
-                   userStats.yesPercentage > 30 ? '🔍 選別タイプ！慎重に選んでいます' :
-                   '🎯 厳選タイプ！とても厳しい目で選んでいます'}
+                  {userStats.yesPercentage > 70 ? '🌟 ポジティブエッチ！多くの画像を好んでいます' :
+                   userStats.yesPercentage > 50 ? '⚖️ バランスエッチ！適度に選んでいます' :
+                   userStats.yesPercentage > 30 ? '🔍 選別エッチ！慎重に選んでいます' :
+                   '🎯 厳選エッチ！とても厳しい目で選んでいます'}
                 </p>
                 <p style={{ color: '#888', fontSize: '0.9rem' }}>
-                  あなたの投票傾向を他のユーザーと比較してみましょう
+                  あなたの鑑定傾向を他のユーザーと比較してみましょう
                 </p>
               </div>
             </div>
@@ -199,7 +199,7 @@ export default function ProfileView({ user }: ProfileViewProps) {
               {/* TOP YES画像 */}
               <div>
                 <h3 style={{ color: '#48bb78', marginBottom: '20px', textAlign: 'center' }}>
-                  🏆 最も人気の画像 (YES票数)
+                  最もエッチの画像
                 </h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                   {userStats.topYesImages.map((item, index) => (
@@ -233,10 +233,7 @@ export default function ProfileView({ user }: ProfileViewProps) {
                       />
                       <div>
                         <div style={{ fontWeight: 'bold', color: '#48bb78' }}>
-                          👍 {item.votes} 票
-                        </div>
-                        <div style={{ fontSize: '0.8rem', color: '#666' }}>
-                          YES率: {item.image.get('yesPercentage') || 0}%
+                          {item.votes} 回
                         </div>
                       </div>
                     </div>
@@ -247,7 +244,7 @@ export default function ProfileView({ user }: ProfileViewProps) {
               {/* TOP NO画像 */}
               <div>
                 <h3 style={{ color: '#f56565', marginBottom: '20px', textAlign: 'center' }}>
-                  💔 最も不人気の画像 (NO票数)
+                  最もノーエッチの画像
                 </h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                   {userStats.topNoImages.map((item, index) => (
@@ -281,10 +278,7 @@ export default function ProfileView({ user }: ProfileViewProps) {
                       />
                       <div>
                         <div style={{ fontWeight: 'bold', color: '#f56565' }}>
-                          👎 {item.votes} 票
-                        </div>
-                        <div style={{ fontSize: '0.8rem', color: '#666' }}>
-                          YES率: {item.image.get('yesPercentage') || 0}%
+                          {item.votes} 回
                         </div>
                       </div>
                     </div>

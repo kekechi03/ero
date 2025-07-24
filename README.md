@@ -1,15 +1,15 @@
 # エンターテインメントレーティング機構ERO
 
-2D画像評価ゲーム - TypeScript + Next.js + Parse Server (Back4App)
+エンターテインメントレーティング機構(ERO) - TypeScript + Next.js + Parse Server (Back4App)
 
 ## 機能
 
-- 🎮 **投票**: 未投票の画像がランダムに選出され、Yes/Noで投票していく
+- 🎮 **評価**: 未鑑定の画像がランダムに選出され、エッチ/ノーエッチで鑑定していく
 - 📊 **アップロード**: 画像をドラッグ&ドロップしてアップロード(1MB未満)
-- 👤 **プロフィール**: 個人の投票履歴と傾向分析
+- 👤 **プロフィール**: 個人の鑑定履歴と傾向分析
 - 📊 **ランキング機能**: 一番Yesの多い画像とNoの多い画像を並べて表示
 - 🔧 **管理者機能**: 画像の削除、アップロード可能な数制限の設定
-- 📊 **リアルタイム集計**: 投票後すぐに全体の投票統計を表示
+- 📊 **リアルタイム集計**: 鑑定後すぐに全体の鑑定統計を表示
 
 ## UIデザイン
 - アンケート形式に特化した、ただしイラスト風のデザイン
@@ -46,12 +46,12 @@ NEXT_PUBLIC_PARSE_LIVEQUERY_URL=wss://your-app-name.back4app.io/
 **EroImage**
 - file (File) - 画像ファイル
 - uploader (Pointer<_User>) - アップロード者
-- yesCount (Number) - Yes投票数
-- noCount (Number) - No投票数
+- yesCount (Number) - エッチ鑑定数
+- noCount (Number) - ノーエッチ鑑定数
 
 **Vote**
-- image (Pointer<EroImage>) - 投票対象画像
-- user (Pointer<_User>) - 投票者
+- image (Pointer<EroImage>) - 鑑定対象画像
+- user (Pointer<_User>) - 鑑定者
 - answer (Boolean) - Yes(true)/No(false)
 
 2. CLPを設定:
@@ -92,8 +92,8 @@ vercel env add NEXT_PUBLIC_PARSE_LIVEQUERY_URL
 
 ### 一般ユーザー
 1. サインアップ/ログイン
-2. ゲーム画面でランダム画像にYes/No投票
-3. 投票後、全体の結果を確認
+2. 評価画面でランダム画像にYes/No鑑定
+3. 鑑定後、全体の結果を確認
 4. プロフィール画面で自分の傾向を分析
 5. アップロード画面で画像をアップロード
 
@@ -116,7 +116,7 @@ vercel env add NEXT_PUBLIC_PARSE_LIVEQUERY_URL
 ero/
 ├── components/          # Reactコンポーネント
 │   ├── AuthView.tsx    # 認証画面
-│   ├── GameView.tsx    # ゲーム画面
+│   ├── GameView.tsx    # 鑑定画面
 │   ├── ProfileView.tsx # プロフィール画面
 │   ├── UploadView.tsx # アップロード画面
 │   └── AdminView.tsx   # 管理者画面

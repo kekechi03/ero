@@ -57,7 +57,7 @@ export default function AdminView({ user }: AdminViewProps) {
   };
 
   const deleteImage = async (image: ImageWithStats) => {
-    if (!confirm('この画像を削除してもよろしいですか？関連する投票データも削除されます。')) return;
+    if (!confirm('この画像を削除してもよろしいですか？関連する鑑定データも削除されます。')) return;
     try {
       setError('');
       const query = new Parse.Query(EroImage);
@@ -97,14 +97,14 @@ export default function AdminView({ user }: AdminViewProps) {
                 />
                 <div style={{ marginBottom: '15px' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <span style={{ color: '#48bb78', fontWeight: 'bold' }}>👍 {image.get('yesCount') || 0}</span>
-                    <span style={{ color: '#f56565', fontWeight: 'bold' }}>👎 {image.get('noCount') || 0}</span>
+                    <span style={{ color: '#48bb78', fontWeight: 'bold' }}> エッチ: {image.get('yesCount') || 0}</span>
+                    <span style={{ color: '#f56565', fontWeight: 'bold' }}> ノーエッチ: {image.get('noCount') || 0}</span>
                   </div>
                   <div style={{ display: 'flex', height: '20px', borderRadius: '10px', overflow: 'hidden', background: '#e2e8f0', marginBottom: '8px' }}>
                     <div style={{ width: `${image.yesPercentage}%`, background: 'linear-gradient(45deg, #48bb78, #38a169)', transition: 'width 0.3s ease' }}></div>
                     <div style={{ width: `${100 - image.yesPercentage}%`, background: 'linear-gradient(45deg, #f56565, #e53e3e)', transition: 'width 0.3s ease' }}></div>
                   </div>
-                  <div style={{ fontSize: '0.9rem', color: '#666', textAlign: 'center' }}>総投票数: {image.totalVotes}票 | YES率: {image.yesPercentage}%</div>
+                  <div style={{ fontSize: '0.9rem', color: '#666', textAlign: 'center' }}>総鑑定数: {image.totalVotes}回 | エッチ率: {image.yesPercentage}%</div>
                   <div style={{ fontSize: '0.8rem', color: '#888', textAlign: 'center', marginTop: '5px' }}>
                     アップロード: {image.get('uploader')?.get('username') || '不明'} | {image.createdAt ? new Date(image.createdAt).toLocaleDateString('ja-JP') : ''}
                   </div>

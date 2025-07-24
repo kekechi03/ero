@@ -221,7 +221,7 @@ export default function RankingView({ user }: RankingViewProps) {
     <div className="fade-in">
       <div className="card">
         <div className="card-header">
-          <h2 className="card-title">🏆 ランキング</h2>
+          <h2 className="card-title"> ランキング</h2>
           <p className="card-subtitle">上位画像のランキング</p>
         </div>
 

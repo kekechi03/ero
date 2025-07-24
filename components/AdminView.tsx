@@ -79,7 +79,7 @@ export default function AdminView({ user }: AdminViewProps) {
     <div className="fade-in">
       <div className="card">
         <div className="card-header">
-          <h2 className="card-title">🔧 管理者画面</h2>
+          <h2 className="card-title"> 管理者画面</h2>
           <p className="card-subtitle">画像の管理</p>
         </div>
         {error && <div className="error">{error}</div>}

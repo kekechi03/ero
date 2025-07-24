@@ -60,7 +60,7 @@ export default function UploadView({ user }: UploadViewProps) {
   return (
     <div className="fade-in">
       <div className="card" style={{ maxWidth: 600, margin: 'auto', padding: 20 }}>
-        <h2>📤 画像アップロード</h2>
+        <h2> 画像アップロード</h2>
 
         {error && <div className="error">{error}</div>}
         {success && <div className="success">{success}</div>}

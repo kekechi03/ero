@@ -107,7 +107,7 @@ export default function ProfileView({ user }: ProfileViewProps) {
     <div className="fade-in">
       <div className="card">
         <div className="card-header">
-          <h2 className="card-title">👤 プロフィール</h2>
+          <h2 className="card-title"> プロフィール</h2>
           <p className="card-subtitle">@{user.get('username')} の鑑定傾向分析</p>
         </div>
 
@@ -118,14 +118,14 @@ export default function ProfileView({ user }: ProfileViewProps) {
             onClick={() => setActiveTab('stats')}
             style={{ border: 'none', borderBottom: activeTab === 'stats' ? '3px solid #667eea' : 'none' }}
           >
-            📊 個人統計
+             個人統計
           </button>
           <button
             className={`nav-link ${activeTab === 'ranking' ? 'active' : ''}`}
             onClick={() => setActiveTab('ranking')}
             style={{ border: 'none', borderBottom: activeTab === 'ranking' ? '3px solid #667eea' : 'none' }}
           >
-            🏆 ランキング
+             ランキング
           </button>
         </div>
 
@@ -180,10 +180,10 @@ export default function ProfileView({ user }: ProfileViewProps) {
 
               <div style={{ textAlign: 'center' }}>
                 <p style={{ color: '#666', fontSize: '1.1rem', marginBottom: '10px' }}>
-                  {userStats.yesPercentage > 70 ? '🌟 ポジティブエッチ！多くの画像を好んでいます' :
-                   userStats.yesPercentage > 50 ? '⚖️ バランスエッチ！適度に選んでいます' :
-                   userStats.yesPercentage > 30 ? '🔍 選別エッチ！慎重に選んでいます' :
-                   '🎯 厳選エッチ！とても厳しい目で選んでいます'}
+                  {userStats.yesPercentage > 70 ? 'ポジティブエッチ！多くの画像を好んでいます' :
+                   userStats.yesPercentage > 50 ? 'バランスエッチ！適度に選んでいます' :
+                   userStats.yesPercentage > 30 ? '選別エッチ！慎重に選んでいます' :
+                   '厳選エッチ！とても厳しい目で選んでいます'}
                 </p>
                 <p style={{ color: '#888', fontSize: '0.9rem' }}>
                   あなたの鑑定傾向を他のユーザーと比較してみましょう

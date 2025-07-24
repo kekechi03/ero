@@ -19,28 +19,28 @@ const NavBar: React.FC<NavBarProps> = ({ currentView, isAdmin, onNavigate, onLog
           onClick={() => onNavigate('game')}
           style={{ whiteSpace: 'nowrap', minWidth: 'fit-content' }}
         >
-          🎮 評価
+           評価
         </button>
         <button
           className={`nav-link ${currentView === 'ranking' ? 'active' : ''}`}
           onClick={() => onNavigate('ranking')}
           style={{ whiteSpace: 'nowrap', minWidth: 'fit-content' }}
         >
-          🏆 ランキング
+           ランキング
         </button>
         <button
           className={`nav-link ${currentView === 'upload' ? 'active' : ''}`}
           onClick={() => onNavigate('upload')}
           style={{ whiteSpace: 'nowrap', minWidth: 'fit-content' }}
         >
-          📤 アップロード
+           アップロード
         </button>
         <button
           className={`nav-link ${currentView === 'profile' ? 'active' : ''}`}
           onClick={() => onNavigate('profile')}
           style={{ whiteSpace: 'nowrap', minWidth: 'fit-content' }}
         >
-          👤 プロフィール
+           プロフィール
         </button>
         {isAdmin && (
           <button
@@ -48,7 +48,7 @@ const NavBar: React.FC<NavBarProps> = ({ currentView, isAdmin, onNavigate, onLog
             onClick={() => onNavigate('admin')}
             style={{ whiteSpace: 'nowrap', minWidth: 'fit-content' }}
           >
-            🔧 管理者
+             管理者
           </button>
         )}
         <button 

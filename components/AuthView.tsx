@@ -49,11 +49,20 @@ export default function AuthView({ onLogin }: AuthViewProps) {
     <div className="fade-in">
       <div className="card">
         <div className="card-header">
-          <h1 className="card-title">🎮 ERO</h1>
+          <h1 className="card-title">ERO</h1>
           <h2 className="card-subtitle">エンターテインメントレーティング機構</h2>
           <p style={{ color: '#666', fontSize: '1rem', marginBottom: '20px' }}>
           エンターテインメントレーティング機構(ERO) - エッチ/ノーエッチで鑑定してください
           </p>
+        </div>
+        
+        <div style={{ marginTop: '30px', padding: '20px', background: '#f8f9fa', borderRadius: '15px', textAlign: 'center' }}>
+          <div style={{ textAlign: 'left', fontSize: '0.9rem', color: '#555' }}>
+            <p><strong>鑑定:</strong> ランダムに表示される画像をエッチ/ノーエッチで鑑定</p>
+            <p><strong>アップロード:</strong> 画像をアップロードして鑑定対象に含める</p>
+            <p><strong>プロフィール:</strong> 自分の鑑定履歴と傾向を分析</p>
+            <p><strong>ランキング:</strong> 上位の画像をチェック</p>
+          </div>
         </div>
 
         {error && <div className="error">{error}</div>}
@@ -115,16 +124,6 @@ export default function AuthView({ onLogin }: AuthViewProps) {
             </button>
           </div>
         </form>
-
-        <div style={{ marginTop: '30px', padding: '20px', background: '#f8f9fa', borderRadius: '15px', textAlign: 'center' }}>
-          <h3 style={{ color: '#667eea', marginBottom: '15px' }}>🎯 評価方法</h3>
-          <div style={{ textAlign: 'left', fontSize: '0.9rem', color: '#555' }}>
-            <p>📝 <strong>鑑定:</strong> ランダムに表示される画像にYes/Noで鑑定</p>
-            <p>📊 <strong>統計:</strong> 鑑定後に全体の結果を確認</p>
-            <p>👤 <strong>プロフィール:</strong> 自分の鑑定履歴と傾向を分析</p>
-            <p>🏆 <strong>ランキング:</strong> 上位の画像をチェック</p>
-          </div>
-        </div>
       </div>
     </div>
   );

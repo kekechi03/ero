@@ -15,6 +15,7 @@ export default function AuthView({ onLogin }: AuthViewProps) {
   const [loading, setLoading] = useState(false);
   const [showDescription, setShowDescription] = useState(true);
   const [isReady, setIsReady] = useState(false);
+  const [userCount, setUserCount] = useState<number | null>(null);
 
   useEffect(() => {
     const hasSeenIntro = localStorage.getItem('hasSeenIntro');
@@ -22,7 +23,20 @@ export default function AuthView({ onLogin }: AuthViewProps) {
       setShowDescription(false);
     }
     setIsReady(true);
+    
+    // Fetch user count from cloud function
+    fetchUserCount();
   }, []);
+
+  const fetchUserCount = async () => {
+    try {
+      const response = await Parse.Cloud.run('getUserCount');
+      setUserCount(response.count);
+    } catch (error) {
+      console.error('Error fetching user count:', error);
+      setUserCount(0);
+    }
+  };
 
   const handleCloseDescription = () => {
     setShowDescription(false);
@@ -88,6 +102,16 @@ export default function AuthView({ onLogin }: AuthViewProps) {
           <div className="card-header">
             <h1 className="card-title">ERO</h1>
             <h2 className="card-subtitle">エンターテインメントレーティング機構</h2>
+            {userCount !== null && (
+              <div style={{ 
+                marginTop: '10px', 
+                fontSize: '0.9rem', 
+                color: '#8d6e63',
+                fontFamily: 'Georgia, serif'
+              }}>
+                会員数: {userCount.toLocaleString()}人
+              </div>
+            )}
           </div>
 
           {error && <div className="error">{error}</div>}

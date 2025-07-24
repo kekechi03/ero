@@ -123,7 +123,4 @@ interface AdminViewProps {
   user: Parse.User;
 }
 
-interface ImageWithStats extends EroImage {
-  totalVotes: number;
-  yesPercentage: number;
-}
+

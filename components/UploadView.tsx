@@ -21,7 +21,9 @@ export default function UploadView({ user }: UploadViewProps) {
   };
 
   const upload = async (file: File) => {
-    setUploading(true); setError(''); setSuccess('');
+    setUploading(true);
+    setError('');
+    setSuccess('');
     try {
       const ts = Date.now();
       const rnd = Math.random().toString(36).slice(-6);
@@ -29,12 +31,14 @@ export default function UploadView({ user }: UploadViewProps) {
       const name = `img_${ts}_${rnd}.${ext}`;
       const pfile = new Parse.File(name, file);
       await pfile.save();
+
       const img = new EroImage();
       img.set('file', pfile);
       img.set('uploader', user);
       img.set('yesCount', 0);
       img.set('noCount', 0);
       await img.save();
+
       setSuccess('アップロード完了');
       fileInputRef.current!.value = '';
     } catch (e: any) {
@@ -45,32 +49,51 @@ export default function UploadView({ user }: UploadViewProps) {
     }
   };
 
-  const onDrop = (e: DragEvent) => { e.preventDefault(); setDragOver(false); handleFile(e.dataTransfer.files); };
+  const onDrop = (e: DragEvent) => {
+    e.preventDefault();
+    setDragOver(false);
+    handleFile(e.dataTransfer.files);
+  };
   const onDragOver = (e: DragEvent) => { e.preventDefault(); setDragOver(true); };
   const onDragLeave = (e: DragEvent) => { e.preventDefault(); setDragOver(false); };
 
   return (
-    <div style={{ maxWidth: 600, margin: 'auto', padding: 20 }}>
-      <h2>📤 画像アップロード</h2>
-      {error && <div className="error">{error}</div>}
-      {success && <div className="success">{success}</div>}
-      <div
-        className={`dropzone${dragOver ? ' drag-over' : ''}`}
-        onDrop={onDrop} onDragOver={onDragOver} onDragLeave={onDragLeave}
-        onClick={() => fileInputRef.current?.click()}
-        style={{ padding: 40, border: '2px dashed #ccc', textAlign: 'center', cursor: 'pointer' }}
-      >
-        {uploading ? 'アップロード中…' : 'クリック or ドラッグ&ドロップで画像を選択'}
+    <div className="fade-in">
+      <div className="card" style={{ maxWidth: 600, margin: 'auto', padding: 20 }}>
+        <h2>📤 画像アップロード</h2>
+
+        {error && <div className="error">{error}</div>}
+        {success && <div className="success">{success}</div>}
+
+        <div
+          className={`dropzone${dragOver ? ' drag-over' : ''}`}
+          onDrop={onDrop}
+          onDragOver={onDragOver}
+          onDragLeave={onDragLeave}
+          onClick={() => fileInputRef.current?.click()}
+          style={{
+            padding: 40,
+            border: '2px dashed #ccc',
+            textAlign: 'center',
+            cursor: 'pointer'
+          }}
+        >
+          {uploading ? 'アップロード中…' : 'クリック or ドラッグ&ドロップで画像を選択'}
+        </div>
+
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          style={{ display: 'none' }}
+          onChange={e => handleFile(e.target.files)}
+          disabled={uploading}
+        />
+
+        <p style={{ color: '#666', marginTop: 8 }}>
+          対応形式: JPG / PNG / GIF ｜ 最大1MB
+        </p>
       </div>
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        style={{ display: 'none' }}
-        onChange={e => handleFile(e.target.files)}
-        disabled={uploading}
-      />
-      <p style={{ color: '#666', marginTop: 8 }}>対応形式: JPG/PNG/GIF ｜ 最大1MB</p>
     </div>
   );
 }
